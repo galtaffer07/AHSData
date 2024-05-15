@@ -127,11 +127,13 @@ check_base = carbon_levels.drop(columns = carbon_levels.columns[0], axis = 1)
 
 v = "ewro"
 terminate_loop = False
+targ1 = 70
+targ2 = 80   #please change as needed
 
 while not terminate_loop:
     column_name = input("Enter a column name (TEMPERATURE) to check if its system is all-set: ")
     if column_name in carbon_levels_without_holidays.columns:
-        if ((abs(carbon_levels_without_holidays[column_name].quantile(0.15))-66 < 2) and (abs(carbon_levels_without_holidays[column_name].quantile(0.85))- 69 < 2)):
+        if ((abs(carbon_levels_without_holidays[column_name].quantile(0.15)-targ1) < 2) and (abs(carbon_levels_without_holidays[column_name].quantile(0.85)- targ2) < 2)):
             print("Good system")
             print("\nThis system runs from " + str(carbon_levels_without_holidays[column_name].quantile(0.15)) + " F to " + str(carbon_levels_without_holidays[column_name].quantile(0.85)) + " F.")
             while v != "yes":
@@ -154,4 +156,3 @@ while not terminate_loop:
                     print("Invalid, try again: ")
 
         
-
