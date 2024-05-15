@@ -125,8 +125,33 @@ check_base = carbon_levels.drop(columns = carbon_levels.columns[0], axis = 1)
 #print("Weekly values: " + str(grouped_by_week['Cafe UV08 ZN08 CO2'].mean())) 
 #print(grouped_by_month['Cafe UV08 ZN08 CO2'].mean()) #prints out monthly averages
 
+v = "ewro"
+terminate_loop = False
 
+while not terminate_loop:
+    column_name = input("Enter a column name (TEMPERATURE) to check if its system is all-set: ")
+    if column_name in carbon_levels_without_holidays.columns:
+        if ((abs(carbon_levels_without_holidays[column_name].quantile(0.15))-66 < 2) and (abs(carbon_levels_without_holidays[column_name].quantile(0.85))- 69 < 2)):
+            print("Good system")
+            print("\nThis system runs from " + str(carbon_levels_without_holidays[column_name].quantile(0.15)) + " F to " + str(carbon_levels_without_holidays[column_name].quantile(0.85)) + " F.")
+            while v != "yes":
+                v = input("Check again? ").lower()
+                if v == "no":
+                    terminate_loop = True
+                    break
+                elif v != "yes":
+                    print("Invalid, try again: ")
 
+        else:
+            print("Bad system")
+            print("\nThis system runs from " + str(carbon_levels_without_holidays[column_name].quantile(0.15)) + " F to " + str(carbon_levels_without_holidays[column_name].quantile(0.85)) + " F.")
+            while v != "yes":
+                v = input("Check again? ").lower()
+                if v == "no":
+                    terminate_loop = True
+                    break 
+                elif v != "yes":
+                    print("Invalid, try again: ")
 
-                
+        
 
